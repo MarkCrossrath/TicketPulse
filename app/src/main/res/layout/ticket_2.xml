@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="665dp"
+        android:orientation="vertical"
+        android:padding="15dp">
+        <TextView
+            android:id="@+id/t1TitleTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:textColor="#000"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/ticket_image"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/loading"
+            android:scaleType="centerCrop" />
+        <TextView
+            android:id="@+id/t1DescriptionTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:text="This will be the description of the post. If the description text contatins more then the three lines it will be trimed to three lines and three dots will be displayed at the end of 3rd line."
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/t1LocationTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="Event Location "
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/t1DateTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="Event date "
+            android:textSize="20sp" />
+
+
+
+        <TextView
+            android:id="@+id/random"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textAlignment="center"
+            android:textSize="3dp"
+            android:textColor="@color/invisColor"/>
+
+
+        <TextView
+            android:id="@+id/ticketPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Ticket 1 :€30"
+            android:textAlignment="center" />
+
+
+
+
+
+
+        <Button
+            android:id="@+id/ticket_purchase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="@drawable/rounded_button_transparent"
+            android:text="Purchase Ticket" />
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>
