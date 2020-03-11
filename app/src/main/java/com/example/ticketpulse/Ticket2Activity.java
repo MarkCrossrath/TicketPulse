@@ -162,6 +162,7 @@ public class Ticket2Activity extends AppCompatActivity {
                 }
 
 
+
                 Log.d(TAG, "onClick: Attempting to add object to database.");
                 String ticket = random.getText().toString();
                 if(!ticket.equals("")){
