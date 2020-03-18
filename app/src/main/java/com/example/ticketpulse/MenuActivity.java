@@ -24,6 +24,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         ResaleBtn = findViewById(R.id.resell_button);
 
         findViewById(R.id.events_button).setOnClickListener(this);
+        findViewById(R.id.the_pulse_button).setOnClickListener(this);
 
     }
 
@@ -40,9 +41,12 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                 userEvent();
 
                 break;
-            //case R.id.the_pulse_button:
-            //  startActivity(new Intent(this, PulseActivity.class));
-            //    break;
+            case R.id.the_pulse_button:
+
+                Intent intent = new Intent(MenuActivity.this, WalletActivity.class);
+
+                startActivity(intent);
+            break;
             //  case R.id.resell_button:
             //   startActivity(new Intent(this, ResaleActivity.class));
             //     break;
