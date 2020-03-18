@@ -169,8 +169,14 @@ public class Ticket1Activity extends AppCompatActivity {
                     String userID = user.getUid();
                     String email = user.getEmail();
                     mRef.child("Users").child(userID).child("ticket1").setValue(ticket);
-                    mRef.child("Tickets").child(ticket).setValue(userID);
-                    mRef.child("Tickets").child(ticket).setValue(email);
+                    mRef.child("Tickets").child(ticket).child("User").setValue(userID);
+                    mRef.child("Tickets").child(ticket).child("Email").setValue(email);
+                    mRef.child("Tickets").child(ticket).child("Title").setValue(date);
+
+                    mRef.child("Tickets").child(ticket).child("TicketName").setValue("1234");
+
+
+
                     toastMessage("Adding " + ticket + " to database...");
                     //reset the text
                     random.setText("");
@@ -184,7 +190,7 @@ public class Ticket1Activity extends AppCompatActivity {
     }
 
     private static String getRandomString(int i ){
-        final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmonpqrstuvwxyz0123456789";
+        final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         StringBuilder results = new StringBuilder();
         while (i > 0) {
 
