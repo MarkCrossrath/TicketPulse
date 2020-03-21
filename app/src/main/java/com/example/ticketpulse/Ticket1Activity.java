@@ -2,6 +2,8 @@ package com.example.ticketpulse;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -14,6 +16,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -21,12 +26,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Random;
 
 public class Ticket1Activity extends AppCompatActivity {
@@ -40,6 +48,8 @@ public class Ticket1Activity extends AppCompatActivity {
     TextView t1Title,t1Desc,t1Location,t1Date;
     TextView random;
     //firebase
+    String mStoragePath = "Tickets/";
+    StorageReference mStorageReference;
     FirebaseDatabase mFirebaseDatabase;
     DatabaseReference mRef;
     FirebaseAuth mAuth;
@@ -169,11 +179,12 @@ public class Ticket1Activity extends AppCompatActivity {
                     String userID = user.getUid();
                     String email = user.getEmail();
                     mRef.child("Users").child(userID).child("ticket1").setValue(ticket);
+                    mRef.child("Tickets").child(ticket).child("ticketcode").setValue(ticket);
                     mRef.child("Tickets").child(ticket).child("User").setValue(userID);
-                    mRef.child("Tickets").child(ticket).child("Email").setValue(email);
-                    mRef.child("Tickets").child(ticket).child("Title").setValue(date);
+                    mRef.child("Tickets").child(ticket).child("email").setValue(email);
+                    mRef.child("Tickets").child(ticket).child("title").setValue(date);
 
-                    mRef.child("Tickets").child(ticket).child("TicketName").setValue("1234");
+                    mRef.child("Tickets").child(ticket).child("ticketName").setValue("1234");
 
 
 
@@ -220,6 +231,11 @@ public class Ticket1Activity extends AppCompatActivity {
     private void toastMessage(String message){
         Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
     }
+
+
+
+
+
 
 
 }
