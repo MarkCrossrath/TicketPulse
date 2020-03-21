@@ -37,10 +37,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="7dp"
-                android:background="@drawable/rounded_button_transparent"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+
                 android:text="Events"
                 android:textAllCaps="false"
-                android:textColor="@color/colorAccent" />
+              />
             <Button
                 android:id="@+id/the_pulse_button"
                 android:layout_width="match_parent"
