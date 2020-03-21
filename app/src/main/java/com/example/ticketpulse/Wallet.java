@@ -4,7 +4,7 @@ public class Wallet {
 
 
 
-    String title, email,location, ticketName;
+    String title, email,location, ticketName, ticketcode;
 
     public Wallet(){
 
@@ -40,5 +40,13 @@ public class Wallet {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getTicketcode() {
+        return ticketcode;
+    }
+
+    public void setTicketcode(String ticketcode) {
+        this.ticketcode = ticketcode;
     }
 }
