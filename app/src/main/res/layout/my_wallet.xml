@@ -44,14 +44,14 @@
         android:text="Email"
         android:textSize="15sp" />
 
-
-
-
-
-
-
-
-
+    <TextView
+        android:id="@+id/walletTicketNumberTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:text="Ticket Number"
+        android:textSize="15sp" />
 
 
 
