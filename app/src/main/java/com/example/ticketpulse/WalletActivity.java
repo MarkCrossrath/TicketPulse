@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -38,25 +39,19 @@ public class WalletActivity extends AppCompatActivity {
     private static final String TAG = "listview in for wallet ";
 
 
+    LinearLayoutManager mLayoutManager; //for sorting
+    SharedPreferences mSharedPref; //for saving sort settings
+    RecyclerView mRecyclerView;
     FirebaseDatabase mFirebaseDatabase;
     DatabaseReference mRef;
-    FirebaseAuth mAuth;
-    FirebaseAuth.AuthStateListener mAuthListener;
-    LinearLayoutManager mLayoutManager; //for sorting
-    SharedPreferences mSharedPref;
-    RecyclerView mRecyclerView;
 
     FirebaseRecyclerAdapter<Wallet, WalletViewHolder> firebaseRecyclerAdapter;
     FirebaseRecyclerOptions<Wallet> options;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wallet_listview);
-
-
 
         //Actionbar
         ActionBar actionBar = getSupportActionBar();
@@ -82,21 +77,17 @@ public class WalletActivity extends AppCompatActivity {
 
         //send Query to FirebaseDatabase
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mRef = mFirebaseDatabase.getReference("Data").child("Tickets");
-
+        mRef = mFirebaseDatabase.getReference("Tickets");
 
         showData();
-
-
-
-
     }
 
-    private void showDeleteDataDialog(final String currentTitle, final String currentEmail) {
+
+    private void showDeleteDataDialog(final String currentTicketCode ) {
         //alert dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(WalletActivity.this);
-        builder.setTitle("Delete");
-        builder.setMessage("Are you sure to delete this post?");
+        builder.setTitle("Sell my Ticket");
+        builder.setMessage("Are you sure you want to sell your ticket?");
         //set positive/yes button
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
@@ -104,7 +95,7 @@ public class WalletActivity extends AppCompatActivity {
                 //user pressed "Yes", delete data
 
 
-                Query mQuery = mRef.orderByChild("title").equalTo(currentTitle);
+                Query mQuery = mRef.orderByChild("ticketcode").equalTo(currentTicketCode);
                 mQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -112,29 +103,12 @@ public class WalletActivity extends AppCompatActivity {
                             ds.getRef().removeValue(); // remove values from firebase where title matches
                         }
                         //show message that post(s) deleted
-                        Toast.makeText(WalletActivity.this, "Post deleted successfully...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(WalletActivity.this, "Post deleted successfully....", Toast.LENGTH_SHORT).show();
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-                        //if anything goes wron get and show error message
+                        //if anything goes wrong get and show error message
                         Toast.makeText(WalletActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-                //delete image using reference of url from FirebaseStorage
-                StorageReference mPictureRefe = getInstance().getReferenceFromUrl(currentEmail);
-                mPictureRefe.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        //delete successfully
-                        Toast.makeText(WalletActivity.this, "Image deleted successfully...", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        //unable to delete
-                        //if anything goes wrong while deleting image, get and show error message
-                        Toast.makeText(WalletActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -155,80 +129,69 @@ public class WalletActivity extends AppCompatActivity {
 
 
 
+
+    //show data
     private void showData(){
         options = new FirebaseRecyclerOptions.Builder<Wallet>().setQuery(mRef, Wallet.class).build();
 
         firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Wallet, WalletViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull WalletViewHolder holder, int position, @NonNull Wallet model) {
-                holder.setDetails(getApplicationContext(), model.getTitle(), model.getEmail(), model.getLocation(),model.getTicketName());
+                holder.setDetails(getApplicationContext(), model.getTitle(), model.getEmail() ,model.getLocation(), model.getTicketName(), model.getTicketcode());
             }
 
             @NonNull
             @Override
             public WalletViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                //Inflating layout my_wallet.xml
+                //Inflating layout row.xml
                 View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_wallet, parent, false);
 
-               WalletViewHolder  walletViewHolder = new WalletViewHolder(itemView);
-            //
+                WalletViewHolder walletviewHolder = new WalletViewHolder(itemView);
                 //item click listener
-                walletViewHolder.setOnClickListener(new WalletViewHolder.ClickListener() {
+                walletviewHolder.setOnClickListener(new WalletViewHolder.ClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
                         //get data from firebase at the position clicked
-                        String wTitle = getItem(position).getTitle();
-                        String wEmail = getItem(position).getEmail();
-                        String wLocation = getItem(position).getLocation();
-                        String wTicketName = getItem(position).getTicketName();
+                      String mTitle = getItem(position).getTitle();
+                        String mEmail = getItem(position).getEmail();
+                        String mLocation = getItem(position).getLocation();
+                        String mTicketcode= getItem(position).getTicketcode();
+                        String mTicketName = getItem(position).getTicketName();
 
 
                         //pass this data to new activity
-                        Intent intent = new Intent(view.getContext(), TicketSelectionActivity.class);
-                        intent.putExtra("title", wTitle); // put title
-                        intent.putExtra("email", wEmail); //put description
-                        intent.putExtra("location",wLocation);
-                        intent.putExtra("ticketName",wTicketName);
-
+                        Intent intent = new Intent(view.getContext(), MyTicketActivity.class);
+                        intent.putExtra("title", mTitle); // put title
+                        intent.putExtra("email", mEmail); //put description
+                        intent.putExtra("ticketname",mTicketName);
+                        intent.putExtra("location",mLocation);
+                        intent.putExtra("ticketcode",mTicketcode);
                         startActivity(intent); //start activity
                     }
 
                     @Override
                     public void onItemLongClick(View view, int position) {
                         //get current title
-                        final String cTitle = getItem(position).getTitle();
-                        //get current description
-                        final String cEmail = getItem(position).getEmail();
+                        final String wTitle = getItem(position).getTitle();
+                        //get current Email
+                        final String wEmail = getItem(position).getEmail();
 
                         final String cLocation = getItem(position).getLocation();
-
                         final String cTicketName = getItem(position).getTicketName();
+                        final String wTicketcode = getItem(position).getTicketcode();
 
 
                         //show dialog on long clcik
                         AlertDialog.Builder builder = new AlertDialog.Builder(WalletActivity.this);
                         //options to display in dialog
-                        String[] options = {" Update", " Delete"};
+                        String[] options = {"Sell my Ticket"};
                         //set to dialog
                         builder.setItems(options, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 //handle dialog item clicks
-                                if (which == 0){
-                                    //update clicked
-                                    //start activity with putting current data
-                                  //  Intent intent = new Intent(WalletActivity.this, CreateEventActivity.class);
-                                 // intent.putExtra("cTitle", cTitle);
-                                  //  intent.putExtra("cemail", cEmail);
-                                 //  intent.putExtra("cLocation", cLocation);
-                                   // intent.putExtra("cTicketName", cTicketName);
-
-                                  //  startActivity(intent);
-                                }
-                                if (which == 1){
-                                    //delete clicked
-                                    //method call
-                                    showDeleteDataDialog(cTitle, cEmail);
+                                if (which == 0) {
+                                    showDeleteDataDialog(wTicketcode);
                                 }
                             }
                         });
@@ -237,7 +200,7 @@ public class WalletActivity extends AppCompatActivity {
                     }
                 });
 
-                return walletViewHolder;
+                return walletviewHolder;
             }
         };
 
@@ -247,10 +210,142 @@ public class WalletActivity extends AppCompatActivity {
         //set adapter to firebase recycler view
         mRecyclerView.setAdapter(firebaseRecyclerAdapter);
     }
+    //search data
+    private void firebaseSearch(String searchText) {
+
+        //convert string entered in SearchView to lowercase
+        String query = searchText.toLowerCase();
+
+        Query firebaseSearchQuery = mRef.orderByChild("search").startAt(query).endAt(query + "\uf8ff");
 
 
+        options = new FirebaseRecyclerOptions.Builder<Wallet>().setQuery(firebaseSearchQuery, Wallet.class).build();
 
-    private void toastMessage(String message){
-        Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
+        firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Wallet, WalletViewHolder>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull WalletViewHolder holder, int position, @NonNull Wallet model) {
+                holder.setDetails(getApplicationContext(), model.getTitle(), model.getEmail(), model.getLocation(), model.getTicketName(),model.getTicketcode());
+            }
+
+            @NonNull
+            @Override
+            public WalletViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                //Inflating layout row.xml
+                View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_wallet, parent, false);
+
+               WalletViewHolder walletviewHolder = new WalletViewHolder(itemView);
+                //item click listener
+                walletviewHolder.setOnClickListener(new WalletViewHolder.ClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        String mTitle = getItem(position).getTitle();
+                        String mEmail = getItem(position).getEmail();
+                        String mLocation = getItem(position).getLocation();
+                        String mTicketcode= getItem(position).getTicketcode();
+                        String mTicketName = getItem(position).getTicketName();
+
+
+                        //pass this data to new activity
+                        Intent intent = new Intent(view.getContext(), MyTicketActivity.class);
+                        intent.putExtra("title", mTitle); // put title
+                        intent.putExtra("email", mEmail); //put description
+                        intent.putExtra("ticketname",mTicketName);
+                        intent.putExtra("location",mLocation);
+                        intent.putExtra("ticketcode",mTicketcode);
+                        startActivity(intent); //start activity
+                    }
+
+                    @Override
+                    public void onItemLongClick(View view, int position) {
+                        String mTitle = getItem(position).getTitle();
+                        String mEmail = getItem(position).getEmail();
+                        String mLocation = getItem(position).getLocation();
+                        String mTicketcode= getItem(position).getTicketcode();
+                        String mTicketName = getItem(position).getTicketName();
+
+
+                        //pass this data to new activity
+                        Intent intent = new Intent(view.getContext(), MyTicketActivity.class);
+                        intent.putExtra("title", mTitle); // put title
+                        intent.putExtra("email", mEmail); //put description
+                        intent.putExtra("ticketname",mTicketName);
+                        intent.putExtra("location",mLocation);
+                        intent.putExtra("ticketcode",mTicketcode);
+                        startActivity(intent); //start activity
+                    }
+                });
+
+                return walletviewHolder;
+            }
+        };
+
+        //set layout as LinearLayout
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        firebaseRecyclerAdapter.startListening();
+        //set adapter to firebase recycler view
+        mRecyclerView.setAdapter(firebaseRecyclerAdapter);
+
     }
+
+    //load data into recycler view onStart
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (firebaseRecyclerAdapter !=null){
+            firebaseRecyclerAdapter.startListening();
+        }
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        //handle other action bar item clicks here
+        if (id == R.id.action_sort) {
+            //display alert dialog to choose sorting
+            showSortDialog();
+            return true;
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void showSortDialog() {
+        //options to display in dialog
+        String[] sortOptions = {" Newest", " Oldest"};
+        //create alert dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Sort by") //set title
+                .setIcon(R.drawable.ic_action_sort) //set icon
+                .setItems(sortOptions, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // The 'which' argument contains the index position of the selected item
+                        // 0 means "Newest" and 1 means "oldest"
+                        if (which == 0) {
+                            //sort by newest
+                            //Edit our shared preferences
+                            SharedPreferences.Editor editor = mSharedPref.edit();
+                            editor.putString("Sort", "newest"); //where 'Sort' is key & 'newest' is value
+                            editor.apply(); // apply/save the value in our shared preferences
+                            recreate(); //restart activity to take effect
+                        } else if (which == 1) {
+                            {
+                                //sort by oldest
+                                //Edit our shared preferences
+                                SharedPreferences.Editor editor = mSharedPref.edit();
+                                editor.putString("Sort", "oldest"); //where 'Sort' is key & 'oldest' is value
+                                editor.apply(); // apply/save the value in our shared preferences
+                                recreate(); //restart activity to take effect
+                            }
+                        }
+                    }
+                });
+        builder.show();
+    }
+
 }
+
+
