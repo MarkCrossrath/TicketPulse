@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,8 +21,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -31,9 +32,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.StorageReference;
 
-import static com.google.firebase.storage.FirebaseStorage.getInstance;
 
 public class WalletActivity extends AppCompatActivity {
     private static final String TAG = "listview in for wallet ";
@@ -42,8 +41,14 @@ public class WalletActivity extends AppCompatActivity {
     LinearLayoutManager mLayoutManager; //for sorting
     SharedPreferences mSharedPref; //for saving sort settings
     RecyclerView mRecyclerView;
-    FirebaseDatabase mFirebaseDatabase;
+    FirebaseDatabase mFirebaseDatabase, dFirebaseDatabase;
     DatabaseReference mRef;
+    DatabaseReference dRef;
+   DatabaseReference tRef;
+    FirebaseAuth mAuth;
+
+    FirebaseAuth.AuthStateListener mAuthListener;
+
 
     FirebaseRecyclerAdapter<Wallet, WalletViewHolder> firebaseRecyclerAdapter;
     FirebaseRecyclerOptions<Wallet> options;
@@ -52,6 +57,26 @@ public class WalletActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wallet_listview);
+
+
+
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    toastMessage("Successfully signed in with: " + user.getEmail());
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                    toastMessage("Successfully signed out.");
+                }
+                // ...
+            }
+        };
 
         //Actionbar
         ActionBar actionBar = getSupportActionBar();
@@ -79,6 +104,12 @@ public class WalletActivity extends AppCompatActivity {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mRef = mFirebaseDatabase.getReference("Tickets");
 
+        dFirebaseDatabase = FirebaseDatabase.getInstance();
+        dRef = dFirebaseDatabase.getReference("TicketsOfSale");
+
+        tRef = mFirebaseDatabase.getReference("Tickets").child("ticketcode").push().getKey();
+
+
         showData();
     }
 
@@ -86,24 +117,29 @@ public class WalletActivity extends AppCompatActivity {
     private void showDeleteDataDialog(final String currentTicketCode ) {
         //alert dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(WalletActivity.this);
-        builder.setTitle("Sell my Ticket");
-        builder.setMessage("Are you sure you want to sell your ticket?");
+        builder.setTitle("Delete  my Ticket");
+        builder.setMessage("Are you sure you want to Delete your ticket?");
         //set positive/yes button
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //user pressed "Yes", delete data
+                String key = mRef.child("ticketcode").push().getKey();
+              moveRecord(tRef,dRef);
+
 
 
                 Query mQuery = mRef.orderByChild("ticketcode").equalTo(currentTicketCode);
                 mQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                         for (DataSnapshot ds: dataSnapshot.getChildren()){
-                            ds.getRef().removeValue(); // remove values from firebase where title matches
-                        }
+
+                          ds.getRef().removeValue(); // remove values from firebase where ticketCode matches
+                       }
                         //show message that post(s) deleted
-                        Toast.makeText(WalletActivity.this, "Post deleted successfully....", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(WalletActivity.this, "Ticket deleted successfully....", Toast.LENGTH_SHORT).show();
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -291,6 +327,7 @@ public class WalletActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+//        mAuth.addAuthStateListener(mAuthListener);
         if (firebaseRecyclerAdapter !=null){
             firebaseRecyclerAdapter.startListening();
         }
@@ -345,6 +382,45 @@ public class WalletActivity extends AppCompatActivity {
                 });
         builder.show();
     }
+
+
+
+
+    private void moveRecord(DatabaseReference fromPath, final DatabaseReference toPath) {
+
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                toPath.setValue(dataSnapshot.getValue()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isComplete()) {
+                            Log.d(TAG, "Success!");
+                        } else {
+                            Log.d(TAG, "Copy failed!");
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        };
+        fromPath.addListenerForSingleValueEvent(valueEventListener);
+    }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
+    private void toastMessage(String message){
+        Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
+    }
+
 
 }
 
