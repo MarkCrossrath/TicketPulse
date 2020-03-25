@@ -20,11 +20,12 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.menu_profile);
 
         EventBtn = findViewById(R.id.events_button);
-        PulseBtn = findViewById(R.id.the_pulse_button);
-        ResaleBtn = findViewById(R.id.resell_button);
+        PulseBtn = findViewById(R.id.myTickets_button);
+        ResaleBtn = findViewById(R.id.TFS_button);
 
         findViewById(R.id.events_button).setOnClickListener(this);
-        findViewById(R.id.the_pulse_button).setOnClickListener(this);
+        findViewById(R.id.myTickets_button).setOnClickListener(this);
+        findViewById(R.id.TFS_button).setOnClickListener(this);
 
     }
 
@@ -41,15 +42,15 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                 userEvent();
 
                 break;
-            case R.id.the_pulse_button:
+            case R.id.myTickets_button:
 
                 Intent intent = new Intent(MenuActivity.this, WalletActivity.class);
 
                 startActivity(intent);
             break;
-            //  case R.id.resell_button:
-            //   startActivity(new Intent(this, ResaleActivity.class));
-            //     break;
+              case R.id.TFS_button:
+               startActivity(new Intent(this, TicketsForSaleActivity.class));
+                break;
 
         }
 
