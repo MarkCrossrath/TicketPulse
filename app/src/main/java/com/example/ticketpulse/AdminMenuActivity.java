@@ -10,8 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class AdminMenuActivity extends AppCompatActivity  {
 
     Button EventBtn;
-    Button PulseBtn;
-    Button ResaleBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +19,6 @@ public class AdminMenuActivity extends AppCompatActivity  {
 
 
         EventBtn = findViewById(R.id.events_button);
-        PulseBtn = findViewById(R.id.the_pulse_button);
-        ResaleBtn = findViewById(R.id.resell_button);
 
 
 
