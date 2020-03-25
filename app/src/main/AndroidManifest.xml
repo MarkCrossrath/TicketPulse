@@ -36,6 +36,7 @@
         <activity android:name=".Ticket3Activity" />
         <activity android:name=".WalletActivity" />
         <activity android:name=".MyTicketActivity" />
+        <activity android:name=".TicketsForSaleActivity" />
     </application>
 
 </manifest>
