@@ -82,7 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:background="@drawable/rounded_button_transparent"
+            style="@style/Base.Widget.AppCompat.Button.Colored"
             android:text="Purchase Ticket" />
     </LinearLayout>
 

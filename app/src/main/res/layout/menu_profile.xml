@@ -43,26 +43,27 @@
                 android:textAllCaps="false"
               />
             <Button
-                android:id="@+id/the_pulse_button"
+                android:id="@+id/myTickets_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="7dp"
-                android:background="@drawable/rounded_button_transparent"
-                android:text="The Pulse"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+                android:text="My Tickets"
                 android:textAllCaps="false"
-                android:textColor="@color/colorAccent" />
+               />
 
             <Button
-                android:id="@+id/resell_button"
+                android:id="@+id/TFS_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="7dp"
-                android:background="@drawable/rounded_button_transparent"
-                android:text="Resell Ticket "
+
+                android:text="Tickets for sale "
                 android:textAllCaps="false"
-                android:textColor="@color/colorAccent" />
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+                />
 
 
         </LinearLayout>
