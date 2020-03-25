@@ -45,9 +45,9 @@ public class WalletActivity extends AppCompatActivity {
     DatabaseReference mRef;
     DatabaseReference dRef;
    DatabaseReference tRef;
-    FirebaseAuth mAuth;
+   // FirebaseAuth mAuth;
 
-    FirebaseAuth.AuthStateListener mAuthListener;
+ //   FirebaseAuth.AuthStateListener mAuthListener;
 
 
     FirebaseRecyclerAdapter<Wallet, WalletViewHolder> firebaseRecyclerAdapter;
@@ -61,22 +61,6 @@ public class WalletActivity extends AppCompatActivity {
 
 
 
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    toastMessage("Successfully signed in with: " + user.getEmail());
-                } else {
-                    // User is signed out
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
-                    toastMessage("Successfully signed out.");
-                }
-                // ...
-            }
-        };
 
         //Actionbar
         ActionBar actionBar = getSupportActionBar();
@@ -107,7 +91,7 @@ public class WalletActivity extends AppCompatActivity {
         dFirebaseDatabase = FirebaseDatabase.getInstance();
         dRef = dFirebaseDatabase.getReference("TicketsOfSale");
 
-        tRef = mFirebaseDatabase.getReference("Tickets").child("ticketcode").push().getKey();
+        //tRef = mFirebaseDatabase.getReference("Tickets").child("ticketcode").push().getKey();
 
 
         showData();
@@ -125,7 +109,7 @@ public class WalletActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 //user pressed "Yes", delete data
                 String key = mRef.child("ticketcode").push().getKey();
-              moveRecord(tRef,dRef);
+              moveRecord(mRef,dRef);
 
 
 
@@ -410,13 +394,8 @@ public class WalletActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (mAuthListener != null) {
-            mAuth.removeAuthStateListener(mAuthListener);
-        }
-    }
+
+
     private void toastMessage(String message){
         Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
     }
