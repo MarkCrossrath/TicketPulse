@@ -182,7 +182,10 @@ public class Ticket1Activity extends AppCompatActivity {
                     mRef.child("Tickets").child(ticket).child("ticketcode").setValue(ticket);
                     mRef.child("Tickets").child(ticket).child("User").setValue(userID);
                     mRef.child("Tickets").child(ticket).child("email").setValue(email);
-                    mRef.child("Tickets").child(ticket).child("title").setValue(date);
+                    mRef.child("Tickets").child(ticket).child("title").setValue(title);
+                    mRef.child("Tickets").child(ticket).child("description").setValue(desc);
+                    mRef.child("Tickets").child(ticket).child("date").setValue(date);
+
 
                     mRef.child("Tickets").child(ticket).child("ticketName").setValue("1234");
 

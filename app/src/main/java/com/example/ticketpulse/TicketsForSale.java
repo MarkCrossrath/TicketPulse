@@ -2,7 +2,7 @@ package com.example.ticketpulse;
 
 public class TicketsForSale {
 
-    String title, email,location, ticketName, ticketcode;
+    String title, email,location, ticketName, ticketcode, date, description;
 
     public TicketsForSale(){
 
@@ -46,5 +46,22 @@ public class TicketsForSale {
 
     public void setTicketcode(String ticketcode) {
         this.ticketcode = ticketcode;
+    }
+
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

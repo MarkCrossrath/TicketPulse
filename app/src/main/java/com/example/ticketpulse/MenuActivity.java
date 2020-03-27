@@ -13,6 +13,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     Button EventBtn;
     Button PulseBtn;
     Button ResaleBtn;
+    Button chatBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,10 +23,12 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         EventBtn = findViewById(R.id.events_button);
         PulseBtn = findViewById(R.id.myTickets_button);
         ResaleBtn = findViewById(R.id.TFS_button);
+        chatBtn = findViewById(R.id.chat_button);
 
         findViewById(R.id.events_button).setOnClickListener(this);
         findViewById(R.id.myTickets_button).setOnClickListener(this);
         findViewById(R.id.TFS_button).setOnClickListener(this);
+        findViewById(R.id.chat_button).setOnClickListener(this);
 
     }
 
@@ -52,6 +55,9 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                startActivity(new Intent(this, TicketsForSaleActivity.class));
                 break;
 
+            case R.id.chat_button:
+                startActivity(new Intent(this, ChatActivity.class));
+                break;
         }
 
     }

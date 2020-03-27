@@ -103,7 +103,7 @@ public class TicketsForSaleActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 //user pressed "Yes", delete data
                 String key = mRef.child("ticketcode").push().getKey();
-                moveRecord(tRef,dRef);
+              //  moveRecord(tRef,dRef);
 
 
 
@@ -151,7 +151,7 @@ public class TicketsForSaleActivity extends AppCompatActivity {
         firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<TicketsForSale, TicketForSaleViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull TicketForSaleViewHolder holder, int position, @NonNull TicketsForSale model) {
-                holder.setDetails(getApplicationContext(), model.getTitle(), model.getEmail() ,model.getLocation(), model.getTicketName(), model.getTicketcode());
+                holder.setDetails(getApplicationContext(), model.getTitle(), model.getEmail() ,model.getLocation(), model.getTicketName(), model.getTicketcode(), model.getDescription(), model.getDate());
             }
 
             @NonNull
@@ -171,15 +171,20 @@ public class TicketsForSaleActivity extends AppCompatActivity {
                         String mLocation = getItem(position).getLocation();
                         String mTicketcode= getItem(position).getTicketcode();
                         String mTicketName = getItem(position).getTicketName();
+                        String mDescription = getItem(position).getDescription();
+                        String mDate = getItem(position).getDescription();
+
 
 
                         //pass this data to new activity
-                        Intent intent = new Intent(view.getContext(), MyTicketActivity.class);
+                        Intent intent = new Intent(view.getContext(), Purchase_Ticket_Activity.class);
                         intent.putExtra("title", mTitle); // put title
                         intent.putExtra("email", mEmail); //put description
                         intent.putExtra("ticketname",mTicketName);
                         intent.putExtra("location",mLocation);
                         intent.putExtra("ticketcode",mTicketcode);
+                        intent.putExtra("description",mDescription);
+                        intent.putExtra("date",mDate);
                         startActivity(intent); //start activity
                     }
 
@@ -238,7 +243,7 @@ public class TicketsForSaleActivity extends AppCompatActivity {
         firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<TicketsForSale, TicketForSaleViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull TicketForSaleViewHolder holder, int position, @NonNull TicketsForSale model) {
-                holder.setDetails(getApplicationContext(), model.getTitle(), model.getEmail(), model.getLocation(), model.getTicketName(),model.getTicketcode());
+                holder.setDetails(getApplicationContext(), model.getTitle(), model.getEmail(), model.getLocation(), model.getTicketName(),model.getTicketcode(), model.getDescription(), model.getDate());
             }
 
             @NonNull
@@ -257,15 +262,20 @@ public class TicketsForSaleActivity extends AppCompatActivity {
                         String mLocation = getItem(position).getLocation();
                         String mTicketcode= getItem(position).getTicketcode();
                         String mTicketName = getItem(position).getTicketName();
+                        String mDescription = getItem(position).getDescription();
+                        String mDate = getItem(position).getDescription();
+
 
 
                         //pass this data to new activity
-                        Intent intent = new Intent(view.getContext(), MyTicketActivity.class);
+                        Intent intent = new Intent(view.getContext(), Purchase_Ticket_Activity.class);
                         intent.putExtra("title", mTitle); // put title
                         intent.putExtra("email", mEmail); //put description
                         intent.putExtra("ticketname",mTicketName);
                         intent.putExtra("location",mLocation);
                         intent.putExtra("ticketcode",mTicketcode);
+                        intent.putExtra("description",mDescription);
+                        intent.putExtra("date",mDate);
                         startActivity(intent); //start activity
                     }
 
@@ -276,15 +286,20 @@ public class TicketsForSaleActivity extends AppCompatActivity {
                         String mLocation = getItem(position).getLocation();
                         String mTicketcode= getItem(position).getTicketcode();
                         String mTicketName = getItem(position).getTicketName();
+                        String mDescription = getItem(position).getDescription();
+                        String mDate = getItem(position).getDescription();
+
 
 
                         //pass this data to new activity
-                        Intent intent = new Intent(view.getContext(), MyTicketActivity.class);
+                        Intent intent = new Intent(view.getContext(), Purchase_Ticket_Activity.class);
                         intent.putExtra("title", mTitle); // put title
                         intent.putExtra("email", mEmail); //put description
                         intent.putExtra("ticketname",mTicketName);
                         intent.putExtra("location",mLocation);
                         intent.putExtra("ticketcode",mTicketcode);
+                        intent.putExtra("description",mDescription);
+                        intent.putExtra("date",mDate);
                         startActivity(intent); //start activity
                     }
                 });

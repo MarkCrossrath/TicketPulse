@@ -37,13 +37,17 @@ public class WalletViewHolder extends RecyclerView.ViewHolder {
     }
 
     //set details to recycler view row
-    public void setDetails(Context ctx, String title,String ticketName, String email,  String location, String ticketcode) {
+    public void setDetails(Context ctx, String title,String ticketName, String email,  String location, String ticketcode, String description, String date) {
         //Views
         TextView wTitleTv = wView.findViewById(R.id.walletTitleTv);
         TextView wEmailTv = wView.findViewById(R.id.walletEmailTv);
         TextView wTicketTv = wView.findViewById(R.id.walletTicketNameTv);
         TextView wLocationTv = wView.findViewById(R.id.walletLocationTv);
         TextView wTicketNumberTv = wView.findViewById(R.id.walletTicketNumberTv);
+        TextView wDescriptionTv = wView.findViewById(R.id.walletDescriptionTv);
+        TextView wDateTv = wView.findViewById(R.id.walletDateTv);
+
+
 
 
 
@@ -54,6 +58,8 @@ public class WalletViewHolder extends RecyclerView.ViewHolder {
         wLocationTv.setText(location);
         wTicketTv.setText(ticketName);
         wTicketNumberTv. setText(ticketcode);
+        wDescriptionTv.setText(description);
+        wDateTv.setText(date);
     }
 
     private WalletViewHolder.ClickListener mClickListener;

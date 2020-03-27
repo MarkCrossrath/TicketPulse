@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -31,7 +32,6 @@ import java.util.Random;
 
 public class Ticket2Activity extends AppCompatActivity {
 
-
     private static final String TAG = "AddToDatabase";
 
     Button buttonBtn;
@@ -40,6 +40,8 @@ public class Ticket2Activity extends AppCompatActivity {
     TextView t1Title,t1Desc,t1Location,t1Date;
     TextView random;
     //firebase
+    String mStoragePath = "Tickets/";
+    StorageReference mStorageReference;
     FirebaseDatabase mFirebaseDatabase;
     DatabaseReference mRef;
     FirebaseAuth mAuth;
@@ -162,16 +164,25 @@ public class Ticket2Activity extends AppCompatActivity {
                 }
 
 
-
                 Log.d(TAG, "onClick: Attempting to add object to database.");
                 String ticket = random.getText().toString();
                 if(!ticket.equals("")){
                     FirebaseUser user = mAuth.getCurrentUser();
                     String userID = user.getUid();
                     String email = user.getEmail();
-                    mRef.child("Users").child(userID).child("ticket2").setValue(ticket);
-                    mRef.child("Tickets").child(ticket).setValue(userID);
-                    mRef.child("Tickets").child(ticket).setValue(email);
+                    mRef.child("Users").child(userID).child("ticket1").setValue(ticket);
+                    mRef.child("Tickets").child(ticket).child("ticketcode").setValue(ticket);
+                    mRef.child("Tickets").child(ticket).child("User").setValue(userID);
+                    mRef.child("Tickets").child(ticket).child("email").setValue(email);
+                    mRef.child("Tickets").child(ticket).child("title").setValue(title);
+                    mRef.child("Tickets").child(ticket).child("description").setValue(desc);
+                    mRef.child("Tickets").child(ticket).child("date").setValue(date);
+
+
+                    mRef.child("Tickets").child(ticket).child("ticketName").setValue("1234");
+
+
+
                     toastMessage("Adding " + ticket + " to database...");
                     //reset the text
                     random.setText("");
@@ -185,7 +196,7 @@ public class Ticket2Activity extends AppCompatActivity {
     }
 
     private static String getRandomString(int i ){
-        final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmonpqrstuvwxyz0123456789";
+        final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         StringBuilder results = new StringBuilder();
         while (i > 0) {
 
@@ -215,6 +226,11 @@ public class Ticket2Activity extends AppCompatActivity {
     private void toastMessage(String message){
         Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
     }
+
+
+
+
+
 
 
 }

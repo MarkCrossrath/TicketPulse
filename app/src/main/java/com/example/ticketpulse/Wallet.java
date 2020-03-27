@@ -3,10 +3,17 @@ package com.example.ticketpulse;
 public class Wallet {
 
 
+    String title;
+    String email;
+    String location;
+    String ticketName;
+    String ticketcode;
+    String description;
+    String date;
 
-    String title, email,location, ticketName, ticketcode;
 
-    public Wallet(){
+
+    public Wallet() {
 
     }
 
@@ -49,4 +56,22 @@ public class Wallet {
     public void setTicketcode(String ticketcode) {
         this.ticketcode = ticketcode;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+
 }

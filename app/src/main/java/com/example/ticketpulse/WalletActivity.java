@@ -157,7 +157,7 @@ public class WalletActivity extends AppCompatActivity {
         firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Wallet, WalletViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull WalletViewHolder holder, int position, @NonNull Wallet model) {
-                holder.setDetails(getApplicationContext(), model.getTitle(), model.getEmail() ,model.getLocation(), model.getTicketName(), model.getTicketcode());
+                holder.setDetails(getApplicationContext(), model.getTitle(), model.getEmail() ,model.getLocation(), model.getTicketName(), model.getTicketcode(), model.getDescription(), model.getDate());
             }
 
             @NonNull
@@ -177,6 +177,9 @@ public class WalletActivity extends AppCompatActivity {
                         String mLocation = getItem(position).getLocation();
                         String mTicketcode= getItem(position).getTicketcode();
                         String mTicketName = getItem(position).getTicketName();
+                        String mDescription = getItem(position).getDescription();
+                        String mDate = getItem(position).getDescription();
+
 
 
                         //pass this data to new activity
@@ -186,6 +189,9 @@ public class WalletActivity extends AppCompatActivity {
                         intent.putExtra("ticketname",mTicketName);
                         intent.putExtra("location",mLocation);
                         intent.putExtra("ticketcode",mTicketcode);
+                        intent.putExtra("description",mDescription);
+                        intent.putExtra("date",mDate);
+
                         startActivity(intent); //start activity
                     }
 
@@ -244,7 +250,7 @@ public class WalletActivity extends AppCompatActivity {
         firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Wallet, WalletViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull WalletViewHolder holder, int position, @NonNull Wallet model) {
-                holder.setDetails(getApplicationContext(), model.getTitle(), model.getEmail(), model.getLocation(), model.getTicketName(),model.getTicketcode());
+                holder.setDetails(getApplicationContext(), model.getTitle(), model.getEmail(), model.getLocation(), model.getTicketName(),model.getTicketcode(),model.getDescription(), model.getDate());
             }
 
             @NonNull
@@ -263,6 +269,9 @@ public class WalletActivity extends AppCompatActivity {
                         String mLocation = getItem(position).getLocation();
                         String mTicketcode= getItem(position).getTicketcode();
                         String mTicketName = getItem(position).getTicketName();
+                        String mDescription = getItem(position).getDescription();
+                        String mDate = getItem(position).getDescription();
+
 
 
                         //pass this data to new activity
@@ -272,6 +281,10 @@ public class WalletActivity extends AppCompatActivity {
                         intent.putExtra("ticketname",mTicketName);
                         intent.putExtra("location",mLocation);
                         intent.putExtra("ticketcode",mTicketcode);
+                        intent.putExtra("description",mDescription);
+                        intent.putExtra("date",mDate);
+
+
                         startActivity(intent); //start activity
                     }
 
@@ -282,6 +295,9 @@ public class WalletActivity extends AppCompatActivity {
                         String mLocation = getItem(position).getLocation();
                         String mTicketcode= getItem(position).getTicketcode();
                         String mTicketName = getItem(position).getTicketName();
+                        String mDescription = getItem(position).getDescription();
+                        String mDate = getItem(position).getDescription();
+
 
 
                         //pass this data to new activity
@@ -291,6 +307,9 @@ public class WalletActivity extends AppCompatActivity {
                         intent.putExtra("ticketname",mTicketName);
                         intent.putExtra("location",mLocation);
                         intent.putExtra("ticketcode",mTicketcode);
+                        intent.putExtra("description",mDescription);
+                        intent.putExtra("date",mDate);
+
                         startActivity(intent); //start activity
                     }
                 });

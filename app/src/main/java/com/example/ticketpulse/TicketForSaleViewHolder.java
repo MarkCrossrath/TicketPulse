@@ -35,13 +35,18 @@ public class TicketForSaleViewHolder extends RecyclerView.ViewHolder {
     }
 
     //set details to recycler view row
-    public void setDetails(Context ctx, String title, String ticketName, String email, String location, String ticketcode) {
+    public void setDetails(Context ctx, String title, String ticketName, String email, String location, String ticketcode, String description, String date) {
         //Views
         TextView wTitleTv = tView.findViewById(R.id.tfsTitleTv);
         TextView wEmailTv = tView.findViewById(R.id.tfsEmailTv);
         TextView wTicketTv = tView.findViewById(R.id.tfsTicketNameTv);
         TextView wLocationTv = tView.findViewById(R.id.tfsLocationTv);
         TextView wTicketNumberTv = tView.findViewById(R.id.tfsTicketNumberTv);
+        TextView wDescriptionTv = tView.findViewById(R.id.tfsDescriptionTv);
+        TextView wDateTv = tView.findViewById(R.id.tfsDateTv);
+
+
+
 
 
 
@@ -52,6 +57,8 @@ public class TicketForSaleViewHolder extends RecyclerView.ViewHolder {
         wLocationTv.setText(location);
         wTicketTv.setText(ticketName);
         wTicketNumberTv. setText(ticketcode);
+        wDescriptionTv.setText(description);
+        wDateTv.setText(date);
     }
 
     private TicketForSaleViewHolder.ClickListener mClickListener;
