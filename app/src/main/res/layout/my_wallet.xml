@@ -26,6 +26,18 @@
         android:text="Ticket Name "
         android:textSize="15sp" />
 
+
+    <TextView
+        android:id="@+id/walletDescriptionTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:text="Description"
+        android:textSize="15sp" />
+
+
+
     <TextView
         android:id="@+id/walletLocationTv"
         android:layout_width="match_parent"
@@ -36,6 +48,16 @@
         android:textSize="15sp" />
 
     <TextView
+        android:id="@+id/walletDateTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:text="Date"
+        android:textSize="15sp" />
+
+
+    <TextView
         android:id="@+id/walletEmailTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,6 +65,8 @@
         android:maxLines="3"
         android:text="Email"
         android:textSize="15sp" />
+
+
 
     <TextView
         android:id="@+id/walletTicketNumberTv"

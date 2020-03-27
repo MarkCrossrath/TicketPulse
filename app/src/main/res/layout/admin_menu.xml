@@ -34,6 +34,28 @@
             android:paddingRight="15dp">
 
 
+            <Button
+                android:id="@+id/events_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+                android:text="Events"
+                android:layout_margin="7dp" />
+
+
+            <Button
+                android:id="@+id/chat_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="7dp"
+
+                android:text="chat"
+
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+                />
+
         </LinearLayout>
 
         <ProgressBar
@@ -44,15 +66,7 @@
             android:layout_centerVertical="true"
             android:visibility="gone" />
 
-        <Button
-            android:id="@+id/events_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/rounded_button_transparent"
-            android:text="Events"
-            android:textAllCaps="false"
-            android:textColor="@color/colorAccent" />
+
 
 
     </RelativeLayout>

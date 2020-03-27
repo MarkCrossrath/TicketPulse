@@ -27,6 +27,15 @@
         android:textSize="15sp" />
 
     <TextView
+        android:id="@+id/tfsDescriptionTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:text="Description"
+        android:textSize="15sp" />
+
+    <TextView
         android:id="@+id/tfsLocationTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,6 +43,18 @@
         android:maxLines="3"
         android:text="Location"
         android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tfsDateTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:text="Date"
+        android:textSize="15sp" />
+
+
+
 
     <TextView
         android:id="@+id/tfsEmailTv"

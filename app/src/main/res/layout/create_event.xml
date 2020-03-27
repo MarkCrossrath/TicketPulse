@@ -21,8 +21,8 @@
         <ImageView
             android:id="@+id/pImageIv"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="@color/colorPrimaryDark"/>
+            android:layout_height="250dp"
+            android:background="@drawable/uploadbutton"/>
         <EditText
             android:id="@+id/pDescrEt"
             android:padding="10dp"
