@@ -37,6 +37,9 @@
         <activity android:name=".WalletActivity" />
         <activity android:name=".MyTicketActivity" />
         <activity android:name=".TicketsForSaleActivity" />
+        <activity android:name=".Purchase_Ticket_Activity" />
+        <activity android:name=".ChatDiscussionActivity" />
+        <activity android:name=".ChatActivity" />
     </application>
 
 </manifest>
