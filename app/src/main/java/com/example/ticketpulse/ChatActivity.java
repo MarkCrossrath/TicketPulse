@@ -86,6 +86,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private void getUserName(){
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Please pick a user name");
         final EditText userName = new EditText(this);
 
         builder.setView(userName);
