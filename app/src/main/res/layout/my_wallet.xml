@@ -75,7 +75,8 @@
         android:ellipsize="end"
         android:maxLines="3"
         android:text="Ticket Number"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        android:textColor="@color/invisColor"  />
 
 
 

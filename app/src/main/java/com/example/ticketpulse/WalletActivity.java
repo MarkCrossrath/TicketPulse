@@ -101,8 +101,8 @@ public class WalletActivity extends AppCompatActivity {
     private void showDeleteDataDialog(final String currentTicketCode ) {
         //alert dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(WalletActivity.this);
-        builder.setTitle("Delete  my Ticket");
-        builder.setMessage("Are you sure you want to Delete your ticket?");
+        builder.setTitle("Sell my Ticket");
+        builder.setMessage("Are you sure you want to sell your ticket?");
         //set positive/yes button
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override

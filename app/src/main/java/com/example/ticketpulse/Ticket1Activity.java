@@ -187,7 +187,7 @@ public class Ticket1Activity extends AppCompatActivity {
                     mRef.child("Tickets").child(ticket).child("date").setValue(date);
 
 
-                    mRef.child("Tickets").child(ticket).child("ticketName").setValue("1234");
+                    mRef.child("Tickets").child(ticket).child("location").setValue(location);
 
 
 

@@ -42,7 +42,8 @@
             android:ellipsize="end"
             android:maxLines="3"
             android:text="Ticket Name "
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textColor="@color/invisColor"/>
 
 
 
