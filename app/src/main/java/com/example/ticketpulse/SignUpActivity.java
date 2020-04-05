@@ -27,6 +27,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     EditText editTextSportPreference;
     private FirebaseAuth mAuth;
     String ticket;
+    private String paymentAmount;
 
 
     FirebaseDatabase mFirebaseDatabase;
@@ -38,6 +39,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup);
+        this.setTitle("Sign Up");
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
         editTextEmail = findViewById(R.id.editTextEmail);

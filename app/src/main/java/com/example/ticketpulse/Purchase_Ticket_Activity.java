@@ -1,6 +1,7 @@
 package com.example.ticketpulse;
 
-import android.content.DialogInterface;
+
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -10,12 +11,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -29,7 +27,15 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
+import com.paypal.android.sdk.payments.PayPalConfiguration;
+import com.paypal.android.sdk.payments.PayPalPayment;
+import com.paypal.android.sdk.payments.PayPalService;
+import com.paypal.android.sdk.payments.PaymentActivity;
+import com.paypal.android.sdk.payments.PaymentConfirmation;
 
+import org.json.JSONException;
+
+import java.math.BigDecimal;
 import java.util.Random;
 
 public class Purchase_Ticket_Activity  extends AppCompatActivity {
@@ -39,27 +45,30 @@ public class Purchase_Ticket_Activity  extends AppCompatActivity {
     FirebaseDatabase mFirebaseDatabase;
     DatabaseReference mRef;
     FirebaseAuth mAuth;
-    FirebaseAuth.AuthStateListener mAuthListener;
+
     Button displayBtn;
-    TextView pTitle, pDescription, pLocation, pDate, hiddenCode;
+    TextView pTitle, pDescription, pLocation, pDate, hiddenCode, ticketPrice;
 
     ImageView displayTicket;
 
 
 
     String title,location,hiddencode,description,date;
-
+    private String paymentAmount;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.purhase_ticket);
+        this.setTitle("Purchase Ticket");
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mRef = mFirebaseDatabase.getReference();
 
-
+        Intent i = new Intent(this, PayPalService.class);
+        i.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+        startService(i);
 
         displayBtn = findViewById(R.id.pTicketBtn);
         pTitle = findViewById(R.id.pTitleTv);
@@ -68,6 +77,7 @@ public class Purchase_Ticket_Activity  extends AppCompatActivity {
         displayTicket = findViewById(R.id.pticket_image);
         pDescription = findViewById(R.id.pDescriptionTv);
         pDate = findViewById(R.id.pDateTv);
+        ticketPrice = findViewById(R.id.ticketPrice);
 
 
 
@@ -88,7 +98,7 @@ public class Purchase_Ticket_Activity  extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                     showDeleteDataDialog();
-
+                getPayment();
 
 
                 hiddenCode.setText(getRandomString(16));
@@ -183,21 +193,21 @@ public class Purchase_Ticket_Activity  extends AppCompatActivity {
 
 
 
-        //DatabaseReference deleteticket = FirebaseDatabase.getInstance().getReference()
+
 
        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         Query applesQuery = ref.child("TicketsOfSale").orderByChild("ticketcode").equalTo(hiddencode);
 
         applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
                     appleSnapshot.getRef().removeValue();
                 }
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e(TAG, "onCancelled", databaseError.toException());
             }
         });
@@ -205,6 +215,85 @@ public class Purchase_Ticket_Activity  extends AppCompatActivity {
 
 
     }
+
+
+    //Paypal intent request code to track onActivityResult method
+    public static final int PAYPAL_REQUEST_CODE = 123;
+
+
+    //Paypal Configuration Object
+    private static PayPalConfiguration config = new PayPalConfiguration()
+            // Start with mock environment.  When ready, switch to sandbox (ENVIRONMENT_SANDBOX)
+            // or live (ENVIRONMENT_PRODUCTION)
+            .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
+            .clientId(PayPalConfig.PAYPAL_CLIENT_ID);
+
+    @Override
+    public void onDestroy() {
+        stopService(new Intent(this, PayPalService.class));
+        super.onDestroy();
+    }
+
+
+    private void getPayment() {
+        //Getting the amount from editText
+        paymentAmount = ticketPrice.getText().toString();
+
+        //Creating a paypalpayment
+        PayPalPayment payment = new PayPalPayment(new BigDecimal(paymentAmount), "EUR", "Ticket Price",
+                PayPalPayment.PAYMENT_INTENT_SALE);
+
+        //Creating Paypal Payment activity intent
+        Intent intent = new Intent(this, PaymentActivity.class);
+
+        //putting the paypal configuration to the intent
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+
+        //Puting paypal payment to the intent
+        intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payment);
+
+        //Starting the intent activity for result
+        //the request code will be used on the method onActivityResult
+        startActivityForResult(intent, PAYPAL_REQUEST_CODE);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //If the result is from paypal
+        super.onActivityResult(requestCode , resultCode , data);
+        if (requestCode == PAYPAL_REQUEST_CODE) {
+
+            //If the result is OK i.e. user has not canceled the payment
+            if (resultCode == Activity.RESULT_OK) {
+                //Getting the payment confirmation
+                PaymentConfirmation confirm = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
+
+                //if confirmation is not null
+                if (confirm != null) {
+                    try {
+                        //Getting the payment details
+                        String paymentDetails = confirm.toJSONObject().toString(4);
+                        Log.i("paymentExample" , paymentDetails);
+
+                        //Starting a new activity for the payment details and also putting the payment details with intent
+                        startActivity(new Intent(this , PaymentConformationActivity.class)
+                                .putExtra("PaymentDetails" , paymentDetails)
+                                .putExtra("PaymentAmount" , paymentAmount));
+
+                    } catch (JSONException e) {
+                        Log.e("paymentExample" , "an extremely unlikely failure occurred: " , e);
+                    }
+                }
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                Log.i("paymentExample" , "The user canceled.");
+            } else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
+                Log.i("paymentExample" , "An invalid Payment or PayPalConfiguration was submitted. Please see the docs.");
+            }
+        }
+    }
+
+
 
 
 

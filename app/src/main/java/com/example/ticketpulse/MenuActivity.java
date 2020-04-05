@@ -19,6 +19,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu_profile);
+        this.setTitle("Menu");
 
         EventBtn = findViewById(R.id.events_button);
         PulseBtn = findViewById(R.id.myTickets_button);

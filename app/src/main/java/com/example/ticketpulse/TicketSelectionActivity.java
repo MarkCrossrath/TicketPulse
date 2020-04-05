@@ -36,6 +36,7 @@ public class TicketSelectionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ticket_selection);
+        this.setTitle("Ticket Selection");
 
         //Action bar
         ActionBar actionBar = getSupportActionBar();
