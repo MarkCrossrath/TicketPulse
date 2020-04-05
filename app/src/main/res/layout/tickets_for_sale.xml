@@ -15,7 +15,8 @@
         android:text="Title"
         android:textColor="#000"
         android:textSize="22sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:padding="15dp"  />
 
     <TextView
         android:id="@+id/tfsTicketNameTv"
@@ -24,7 +25,9 @@
         android:ellipsize="end"
         android:maxLines="3"
         android:text="Ticket Name "
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        android:textColor="#000"
+        android:padding="15dp" />
 
     <TextView
         android:id="@+id/tfsDescriptionTv"
@@ -33,7 +36,9 @@
         android:ellipsize="end"
         android:maxLines="3"
         android:text="Description"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        android:textColor="#000"
+        android:padding="15dp"/>
 
     <TextView
         android:id="@+id/tfsLocationTv"
@@ -42,7 +47,9 @@
         android:ellipsize="end"
         android:maxLines="3"
         android:text="Location"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        android:textColor="#000"
+        android:padding="15dp" />
 
     <TextView
         android:id="@+id/tfsDateTv"
@@ -51,7 +58,9 @@
         android:ellipsize="end"
         android:maxLines="3"
         android:text="Date"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        android:textColor="#000"
+        android:padding="15dp" />
 
 
 
@@ -63,7 +72,9 @@
         android:ellipsize="end"
         android:maxLines="3"
         android:text="Email"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        android:textColor="#000"
+        android:padding="15dp"/>
 
     <TextView
         android:id="@+id/tfsTicketNumberTv"

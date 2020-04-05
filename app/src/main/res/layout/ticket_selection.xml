@@ -45,7 +45,8 @@
                 android:autoLink="all"
                 android:text="This will be the description of the post"
                 android:textSize="20sp"
-                android:padding="15dp"/>
+                android:padding="15dp"
+                android:textColor="#000" />
 
             <TextView
                 android:id="@+id/locationTv"
@@ -55,7 +56,8 @@
                 android:maxLines="3"
                 android:text="Event Location "
                 android:textSize="20sp"
-                android:padding="15dp"/>
+                android:padding="15dp"
+                android:textColor="#000"  />
 
             <TextView
                 android:id="@+id/dateTv"
@@ -65,7 +67,8 @@
                 android:maxLines="3"
                 android:text="Event date "
                 android:textSize="20sp"
-                android:padding="15dp"/>
+                android:padding="15dp"
+                android:textColor="#000"  />
 
             <LinearLayout
                 android:layout_width="match_parent"

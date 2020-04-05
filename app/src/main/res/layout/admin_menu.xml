@@ -51,7 +51,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="7dp"
 
-                android:text="chat"
+                android:text="The Pulse"
 
                 style="@style/Base.Widget.AppCompat.Button.Colored"
                 />

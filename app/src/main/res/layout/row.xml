@@ -21,7 +21,8 @@
             android:text="Title"
             android:textColor="#000"
             android:textSize="22sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:padding="15dp"/>
 
         <ImageView
             android:id="@+id/rImageView"
@@ -37,9 +38,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:maxLines="3"
+
             android:text="This will be the description of the post. If the description text contatins more then the three lines it will be trimed to three lines and three dots will be displayed at the end of 3rd line."
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:padding="15dp" />
 
         <TextView
             android:id="@+id/rLocationTv"
@@ -48,7 +50,8 @@
             android:ellipsize="end"
             android:maxLines="3"
             android:text="Event Location "
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:padding="15dp"  />
 
         <TextView
             android:id="@+id/rDateTv"
@@ -57,7 +60,8 @@
             android:ellipsize="end"
             android:maxLines="3"
             android:text="Event date "
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:padding="15dp" />
 
 
 

@@ -32,7 +32,8 @@
             android:ellipsize="end"
             android:maxLines="3"
             android:text="This will be the description of the post. If the description text contatins more then the three lines it will be trimed to three lines and three dots will be displayed at the end of 3rd line."
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textColor="#000" />
 
         <TextView
             android:id="@+id/t1LocationTv"
@@ -41,7 +42,8 @@
             android:ellipsize="end"
             android:maxLines="3"
             android:text="Event Location "
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textColor="#000"  />
 
         <TextView
             android:id="@+id/t1DateTv"
@@ -50,7 +52,8 @@
             android:ellipsize="end"
             android:maxLines="3"
             android:text="Event date "
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textColor="#000"   />
 
 
 
@@ -61,17 +64,27 @@
             android:padding="10dp"
             android:textAlignment="center"
             android:textSize="3dp"
-            android:textColor="@color/invisColor"/>
+            android:textColor="@color/invisColor" />
 
 
         <TextView
             android:id="@+id/ticketPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="Ticket 1 :€30"
-            android:textAlignment="center" />
+           android:textSize="25dp"
+            android:text="30"
+            android:textAlignment="center"
+            android:textColor="#000" />
 
+
+        <TextView
+            android:id="@+id/euro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+          android:text="Euro "
+            android:textSize="25dp"
+            android:textAlignment="center"
+            android:textColor="#000" />
 
 
 
