@@ -103,11 +103,11 @@ public class Ticket3Activity extends AppCompatActivity {
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    toastMessage("Successfully signed in with: " + user.getEmail());
+
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
-                    toastMessage("Successfully signed out.");
+
                 }
                 // ...
             }
@@ -170,7 +170,7 @@ public class Ticket3Activity extends AppCompatActivity {
                     FirebaseUser user = mAuth.getCurrentUser();
                     String userID = user.getUid();
                     String email = user.getEmail();
-                    mRef.child("Users").child(userID).child("ticket1").setValue(ticket);
+                    mRef.child("Users").child(userID).child("ticket3").setValue(ticket);
                     mRef.child("Tickets").child(ticket).child("ticketcode").setValue(ticket);
                     mRef.child("Tickets").child(ticket).child("User").setValue(userID);
                     mRef.child("Tickets").child(ticket).child("email").setValue(email);
@@ -183,7 +183,7 @@ public class Ticket3Activity extends AppCompatActivity {
 
 
 
-                    toastMessage("Adding " + ticket + " to database...");
+
                     //reset the text
                     random.setText("");
                 }
