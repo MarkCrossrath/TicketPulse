@@ -138,32 +138,19 @@ public class Ticket1Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 getPayment();
-
-
-
                 random.setText(getRandomString(16));
-
-
                 String data = random.getText().toString();
-
-
-
                 if(data != null){
                     MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
                     try {
-
-
                         BitMatrix bitMatrix = multiFormatWriter.encode(data, BarcodeFormat.QR_CODE,500,500);
                         BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
                         Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
                         ticketImageIV.setImageBitmap(bitmap);
-
                     }catch (WriterException e){
                         e.printStackTrace();
                     }
-
                 }
-
 
                 Log.d(TAG, "onClick: Attempting to add object to database.");
                 String ticket = random.getText().toString();
@@ -178,27 +165,15 @@ public class Ticket1Activity extends AppCompatActivity {
                     mRef.child("Tickets").child(ticket).child("title").setValue(title);
                     mRef.child("Tickets").child(ticket).child("description").setValue(desc);
                     mRef.child("Tickets").child(ticket).child("date").setValue(date);
-
-
                     mRef.child("Tickets").child(ticket).child("location").setValue(location);
-
-
-
-
                     //reset the text
                     random.setText("");
                 }
-
-
             }
 
 
 
         });
-
-
-
-
     }
 
     private static String getRandomString(int i ){
